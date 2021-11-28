@@ -44,7 +44,7 @@ class StochasticBlockModelDataset(InMemoryDataset):
                 being saved to disk. (default: :obj:`None`)
         """
         if not torch.is_tensor(block_sizes):
-            block_sizes = torch.tensor(block_sizes, dtype=torch.int)
+            block_sizes = torch.tensor(block_sizes, dtype=torch.long)
         if not torch.is_tensor(edge_probs):
             edge_probs = torch.tensor(edge_probs, dtype=torch.float)
 
@@ -191,6 +191,18 @@ if __name__ == '__main__':
     MODE = 'RPG'
 
     if MODE == 'RPG':
+
+        rpg = RandomPartitionGraphDataset(
+            root='./graph-data',
+            num_classes=10,
+            num_nodes_per_class=500,
+            node_homophily_ratio=0.7,
+            average_degree=5.0,
+            num_channels=5,
+        )
+        for b in rpg:
+            print(b)
+        exit()
 
         AG = 5.2
         for h in [0.1, 0.35, 0.6, 0.9]:
